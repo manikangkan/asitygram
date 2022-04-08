@@ -1,4 +1,4 @@
-import { snapshot_UNSTABLE, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
@@ -14,6 +14,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadString } from "@firebase/storage";
+import Image from "next/image";
 
 const Modal = () => {
   const [open, setOpen] = useRecoilState(modalState);
@@ -66,7 +67,7 @@ const Modal = () => {
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed z-10 inset-0 overyflow-y-auto"
+        className="fixed z-50 inset-0 overyflow-y-auto"
         onClose={setOpen}>
         <div className="flex items-end justify-center max-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -81,9 +82,7 @@ const Modal = () => {
           </Transition.Child>
           <span
             className="hidden sm:inline-block sm:align-middle sm:h-screen"
-            aria-hidden="true">
-            &#8203
-          </span>
+            aria-hidden="true"></span>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -95,18 +94,19 @@ const Modal = () => {
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
               <div>
                 {selectedFile ? (
-                  <img
+                  <Image
                     src={selectedFile}
-                    alt="selected file"
+                    alt={selectedFile}
+                    width={100}
+                    height={100}
+                    layout="responsive"
+                    objectFit="cover"
                     onClick={() => setSelectedFile(null)}
-                    className="w-full object-contain cursor-pointer rounded-lg"
+                    className="w-full cursor-pointer rounded-lg"
                   />
                 ) : (
                   <div
-                    onClick={() => {
-                      filePickerRef.current.click();
-                      console.log("boom");
-                    }}
+                    onClick={() => filePickerRef.current.click()}
                     className="mx-auto flex  items-center justify-center h-12 w-12 rounded-full bg-blue-500 cursor-pointer">
                     <CameraIcon
                       className="h-6 w-6 text-white"
