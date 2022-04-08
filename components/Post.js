@@ -22,10 +22,10 @@ import {
   query,
   serverTimestamp,
   setDoc,
-  updateDoc,
 } from "firebase/firestore";
-import { ref, getDownloadURL, uploadString } from "@firebase/storage";
 import Moment from "react-moment";
+import Image from "next/image";
+import Img from "./Img";
 
 const Post = ({ id, username, userImage, image, caption }) => {
   const { data: session } = useSession();
@@ -49,7 +49,7 @@ const Post = ({ id, username, userImage, image, caption }) => {
       ),
     [likes]
   );
-  
+
   useEffect(
     () =>
       onSnapshot(
@@ -85,29 +85,31 @@ const Post = ({ id, username, userImage, image, caption }) => {
   };
 
   return (
-    <div className="bg-white my-5 rounded-xl overflow-hidden">
+    <div className="bg-white my-2 rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center p-5">
-        <img
-          src={userImage}
-          className="rounded-full h-12 w-12 object-contain border p-1 mr-3"
-          alt=""
-        />
+      <div className="flex items-center space-x-2 p-4">
+        <Img source={userImage} />
         <p className="flex-1 font-semibold">{username}</p>
         <DotsHorizontalIcon className="h-5" />
       </div>
       {/* Image */}
-      <img
-        src={image ? image : `https://picsum.photos/300/200`}
+      <Image
+        src={image}
         alt={image}
-        className="object-cover w-full"
+        width={100}
+        height={100}
+        layout="responsive"
+        objectFit="cover"
       />
       {/* Button */}
       {session && (
         <div className="flex justify-between items-center px-4 pt-4">
           <div className="flex space-x-4">
             {hasLiked ? (
-              <HeartIconFilled className="btn text-red-500" onClick={likePost} />
+              <HeartIconFilled
+                className="btn text-red-500"
+                onClick={likePost}
+              />
             ) : (
               <HeartIcon className="btn" onClick={likePost} />
             )}
@@ -118,31 +120,28 @@ const Post = ({ id, username, userImage, image, caption }) => {
         </div>
       )}
       {/* Caption */}
-      <p className="p-4 truncate">
+      <div className="p-4 truncate">
         {likes.length > 0 && (
           <p className="font-semibold mb-1">{likes.length} likes</p>
-      )}
+        )}
         <span className="font-semibold mr-1">{username}</span>
         {caption}
-      </p>
+      </div>
       {/* Comments */}
 
       {comments.length > 0 && (
-        <div className="ml-10 h-20 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
+        <div className="ml-10 h-20 overflow-y-scroll scrollbar-thumb-blue-500 scrollbar-thin">
           {comments.map((comment) => (
-            <div key={comment.id} className="flex items-center space-x-2 mb-3">
-              <img
-                src={comment.data().userImage}
-                alt="profile image"
-                className="h-7 rounded-full"
-              />
-              <p className="text-sm flex-1">
+            <div key={comment.id} className="flex items-center space-x-3 mb-3">
+              <Img source={comment.data().userImage} width={12} />
+
+              <p className=" flex-1">
                 <span className="font-semibold">
                   {comment.data().username}{" "}
                 </span>
                 {comment.data().comment}
               </p>
-              <Moment fromNow className="pr-5 text-xs">
+              <Moment fromNow className="pr-5 text-sm text-gray-500">
                 {comment.data().timestamp?.toDate()}
               </Moment>
             </div>
@@ -158,7 +157,7 @@ const Post = ({ id, username, userImage, image, caption }) => {
             type="text"
             value={comment}
             placeholder="Add a comment..."
-            className="border-none flex-1 focus:ring-0 outline-none"
+            className="border-none flex-1 focus:ring-0 outline-none "
             onChange={(e) => setComment(e.target.value)}
           />
           <button

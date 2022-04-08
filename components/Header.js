@@ -12,6 +12,7 @@ import Logo from "./Logo.js";
 import Link from "next/link";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom.js";
+import Img from "./Img";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -20,10 +21,7 @@ const Header = () => {
     <div className="bg-white backdrop-blur-md bg-opacity-80 sticky top-0 z-50">
       <div className="flex justify-between items-center max-w-6xl mx-5 xl:mx-auto">
         {/* left */}
-        <div className="relative hidden lg:inline-grid w-24 cursor-pointer">
-          <Logo />
-        </div>
-        <div className="relative w-16 lg:hidden flex-shrink-0 cursor-pointer">
+        <div className="w-24 cursor-pointer">
           <Logo />
         </div>
 
@@ -36,12 +34,12 @@ const Header = () => {
             <input
               type="text"
               placeholder="Search"
-              className="bg-slate-50 block w-full px-12 sm:py-3 py-2 sm:text-sm border-none rounded-full focus:border-blue-500"
+              className="bg-slate-50 block w-full px-12 md:py-4  border-none rounded-full focus:border-blue-500"
             />
           </div>
         </div>
         {/* right */}
-        <div className="flex items-center justify-end space-x-8">
+        <div className="flex items-center justify-end space-x-4 md:space-x-8">
           <Link href="/">
             <a>
               <HomeIcon className="navBtn" />
@@ -63,12 +61,9 @@ const Header = () => {
               />
               <UserGroupIcon className="navBtn" />
               <HeartIcon className="navBtn" />
-              <img
-                src={session.user.image}
-                alt="profile pic"
-                className="h-10 rounded-full cursor-pointer"
-                onClick={signOut}
-              />
+              <div onClick={signOut}>
+                <Img source={session.user.image} width={12} />
+              </div>
             </>
           ) : (
             <button onClick={signIn}>Sign in</button>

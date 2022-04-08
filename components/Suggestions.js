@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import Img from "./Img";
 
 const fetcher = async () => {
   const res = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -10,12 +11,12 @@ const Suggestions = () => {
   const { data, error } = useSWR("/api/user", fetcher);
 
   return (
-    <div className="mt-4">
+    <div className="my-4">
       <div className="flex justify-between mb-4">
-        <p className="text-sm font-semibold text-gray-500">
+        <p className=" font-semibold text-gray-500">
           Suggestions for you
         </p>
-        <button className="text-sm font-semibold cursor-pointer">
+        <button className=" font-semibold cursor-pointer">
           See all
         </button>
       </div>
@@ -25,18 +26,19 @@ const Suggestions = () => {
           (user, index) =>
             index < 5 && (
               <div
-                className="flex items-center justify-center  mt-2"
+                className="flex items-center justify-center ml-1 my-4"
                 key={index}>
-                <img
-                  src={`https://avatars.dicebear.com/api/micah/${Math.random()}.svg?background=%23AED7FF`}
-                  alt="avatar"
-                  className="h-12 w-12 rounded-full p-1 border object-contain cursor-pointer hover:scale-110 transition transform duration-200 ease-out"
+                <Img
+                  source={`https://avatars.dicebear.com/api/avataaars/${Math.random()}.png?background=%23AED7FF`}
+                  width={12}
+                  extraStyle={true}
                 />
+
                 <div className="flex-1 ml-4">
-                  <h2 className="font-semibold text-sm">{user.username}</h2>
-                  <h3 className="text-xs text-gray-500">{user.username}</h3>
+                  <h2 className="font-semibold ">{user.username}</h2>
+                  <h3 className=" text-gray-500 text-sm">{user.username}</h3>
                 </div>
-                <button className="text-blue-500 text-xs font-semibold">
+                <button className="text-blue-500  font-semibold">
                   Follow
                 </button>
               </div>
