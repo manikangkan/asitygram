@@ -1,7 +1,7 @@
 import {
   BookmarkIcon,
   ChatIcon,
-  EmojiHappyIcon,w
+  EmojiHappyIcon,
   HeartIcon,
   PaperAirplaneIcon,
   ArrowsExpandIcon,
