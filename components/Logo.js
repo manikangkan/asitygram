@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import LogoSvg from "../assets/logo.svg";
+import LogoSvg from "../assets/Logo.svg";
 
 const Logo = ({ n = 2 }) => {
   return (
