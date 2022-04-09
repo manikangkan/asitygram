@@ -12,7 +12,7 @@ const Stories = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="flex p-6  space-x-6 mt-8 overflow-x-scroll scrollbar-thin scrollbar-thumb-black">
+    <div className="flex p-6 space-x-6 mt-2 md:mt-8 overflow-x-scroll scrollbar-thin scrollbar-thumb-blue-500">
       {session && <Story avatar={session.user.image} username={session.user.username} />}
       {suggestions?.length > 0 &&
         suggestions.map((user) => (
