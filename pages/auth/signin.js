@@ -7,10 +7,10 @@ const signIn = ({ providers }) => {
     <>
       <Header />
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <Logo n={3}/>
+        <Logo n={3} />
         <p className="w-3/5 text-center py-10">
-          This is not a real product, it's built for education purpose only. I'm
-          working on building a next level instagram alternative platfrom for
+          This is not a real product, it is built for education purpose only. I
+          am working on building a next level instagram alternative platfrom for
           India. If you wanna join me I would love to grind together.
         </p>
         {Object.values(providers).map((provider) => (

@@ -46,12 +46,10 @@ const Post = ({ id, username, userImage, image, caption }) => {
     [id]
   );
 
-  useEffect(
-    () =>
-      setHasLiked(
-        likes.findIndex((like) => like.id === session?.user?.uid) !== -1
-      ),
-    [likes]
+  useEffect(() =>
+    setHasLiked(
+      likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+    )
   );
 
   useEffect(
