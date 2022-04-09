@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { db } from "../firebase";
 import Post from "./Post";
 
-
-
 const Posts = () => {
   const [posts, setPosts] = useState([]);
 
@@ -20,19 +18,19 @@ const Posts = () => {
     [db]
   );
 
-
   return (
     <div>
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          id={post.id}
-          username={post.data().username}
-          userImage={post.data().profileImage}
-          image={post.data().image}
-          caption={post.data().caption}
-        />
-      ))}
+      {posts.length > 0 &&
+        posts.map((post) => (
+          <Post
+            key={post.id}
+            id={post.id}
+            username={post.data().username}
+            userImage={post.data().profileImage}
+            image={post.data().image}
+            caption={post.data().caption}
+          />
+        ))}
     </div>
   );
 };

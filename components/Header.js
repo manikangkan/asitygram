@@ -45,7 +45,11 @@ const Header = () => {
               <HomeIcon className="navBtn" />
             </a>
           </Link>
-          <MenuIcon className="h-6 w-6 md:hidden cursor-pointer" />
+          <PlusCircleIcon
+            className="md:hidden h-6 cursor-pointer hover:scale-125 transition-all duration-150 ease-out"
+            onClick={() => setOpen(true)}
+          />
+          {/* <MenuIcon className="h-6 w-6 md:hidden cursor-pointer" /> */}
           {session ? (
             <>
               <div className="relative navBtn">

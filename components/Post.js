@@ -1,10 +1,11 @@
 import {
   BookmarkIcon,
   ChatIcon,
-  DotsHorizontalIcon,
   EmojiHappyIcon,
   HeartIcon,
   PaperAirplaneIcon,
+  ArrowsExpandIcon,
+  TrashIcon,
 } from "@heroicons/react/outline";
 
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
@@ -26,6 +27,7 @@ import {
 import Moment from "react-moment";
 import Image from "next/image";
 import Img from "./Img";
+import { useRef } from "react";
 
 const Post = ({ id, username, userImage, image, caption }) => {
   const { data: session } = useSession();
@@ -33,13 +35,15 @@ const Post = ({ id, username, userImage, image, caption }) => {
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
+  const [isCover, setIsCover] = useState(true);
+  const inputEl = useRef(null);
 
   useEffect(
     () =>
       onSnapshot(query(collection(db, "posts", id, "likes")), (snapshot) =>
         setLikes(snapshot.docs)
       ),
-    [db, id]
+    [id]
   );
 
   useEffect(
@@ -59,7 +63,7 @@ const Post = ({ id, username, userImage, image, caption }) => {
         ),
         (snapshot) => setComments(snapshot.docs)
       ),
-    [db, id]
+    [id]
   );
 
   const likePost = async () => {
@@ -87,19 +91,27 @@ const Post = ({ id, username, userImage, image, caption }) => {
   return (
     <div className="bg-white my-2 rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center space-x-2 p-4">
+      <div className="flex items-center space-x-4 p-4">
         <Img source={userImage} />
         <p className="flex-1 font-semibold">{username}</p>
-        <DotsHorizontalIcon className="h-5" />
+        <ArrowsExpandIcon
+          className="h-5 cursor-pointer"
+          onClick={() => setIsCover(!isCover)}
+        />
+        {session && <TrashIcon className="h-6 cursor-pointer" />}
       </div>
       {/* Image */}
       <Image
-        src={image}
-        alt={image}
+        src={
+          image
+            ? image
+            : `https://avatars.dicebear.com/api/avataaars/${Math.random()}.png?background=%23AED7FF`
+        }
+        alt="posted image"
         width={100}
         height={100}
         layout="responsive"
-        objectFit="cover"
+        objectFit={isCover ? "cover" : "contain"}
       />
       {/* Button */}
       {session && (
@@ -113,8 +125,8 @@ const Post = ({ id, username, userImage, image, caption }) => {
             ) : (
               <HeartIcon className="btn" onClick={likePost} />
             )}
-            <ChatIcon className="btn" />
-            <PaperAirplaneIcon className="btn" />
+            <ChatIcon className="btn" onClick={() => inputEl.current.focus()} />
+            <PaperAirplaneIcon className="btn rotate-90" />
           </div>
           <BookmarkIcon className="btn" />
         </div>
@@ -159,6 +171,7 @@ const Post = ({ id, username, userImage, image, caption }) => {
             placeholder="Add a comment..."
             className="border-none flex-1 focus:ring-0 outline-none "
             onChange={(e) => setComment(e.target.value)}
+            ref={inputEl}
           />
           <button
             type="submit"
