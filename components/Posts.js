@@ -7,15 +7,13 @@ import Post from "./Post";
 const Posts = () => {
   const [posts, setPosts] = useState([]);
 
-  useEffect(
-    () =>
-      onSnapshot(
-        query(collection(db, "posts"), orderBy("timestamp", "desc")),
-        (snapshot) => {
-          setPosts(snapshot.docs);
-        }
-      ),
-    [db]
+  useEffect(() =>
+    onSnapshot(
+      query(collection(db, "posts"), orderBy("timestamp", "desc")),
+      (snapshot) => {
+        setPosts(snapshot.docs);
+      }
+    )
   );
 
   return (
