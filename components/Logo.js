@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import LogoSvg from "../assets/Logo.svg";
+import LogoPng from "../assets/asitygram.png";
 
 const Logo = ({ n = 2 }) => {
   return (
     <Link href="/">
       <a>
         <Image
-          src={LogoSvg}
+          src={LogoPng}
           alt="asitygram logo"
           width={n * 73}
           height={n * 27}
