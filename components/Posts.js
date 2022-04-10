@@ -18,7 +18,7 @@ const Posts = () => {
 
   return (
     <div>
-      {posts.length > 0 &&
+      {posts.length > 0 ? (
         posts.map((post) => (
           <Post
             key={post.id}
@@ -28,7 +28,12 @@ const Posts = () => {
             image={post.data().image}
             caption={post.data().caption}
           />
-        ))}
+        ))
+      ) : (
+        <h1 className="mt-96 text-center font-semibold text-xl">
+          No posts are being posted yet
+        </h1>
+      )}
     </div>
   );
 };
